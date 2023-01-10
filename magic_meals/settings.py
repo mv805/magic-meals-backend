@@ -34,7 +34,7 @@ SECRET_KEY = env('SECRET_KEY')
 # 'django-insecure-)e)5nu-ayevhs&lwr&3ot1=poq-^jf-e4xc-l+k3m^$b4(74a_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DEBUG")
+DEBUG = env('DEBUG')
 # True
 
 ALLOWED_HOSTS = []
@@ -88,8 +88,11 @@ WSGI_APPLICATION = 'magic_meals.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME' : env('DB_NAME'),
+        'HOST': env('DB_HOST'),
+        'USER': env('DB_USERNAME'),
+        'PASSWORD': env('DB_PASSWORD')
     }
 }
 
