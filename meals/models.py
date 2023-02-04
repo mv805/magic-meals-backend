@@ -6,16 +6,31 @@ class User(models.Model):
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=255)
 
+    def __str__(self) -> str:
+        return self.email
     class Meta:
         db_table = 'user'
+        ordering = ['email']
 
 class UserGroup(models.Model):
     group_name = models.CharField(max_length=255)
     description = models.TextField()
     users = models.ManyToManyField(User)
 
+    def __str__(self) -> str:
+        return self.group_name
     class Meta:
         db_table = 'user_group'
+class Allergen(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    major_allergen = models.BooleanField(default=False)
+    user_group = models.ForeignKey(UserGroup, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return self.title
+    class Meta:
+        db_table = 'allergen'
 
 class Food(models.Model):
 
@@ -31,6 +46,7 @@ class Food(models.Model):
 
     title = models.CharField(max_length=255)
     description = models.TextField()
+    allergens = models.ManyToManyField(Allergen)
     threat_level = models.CharField(
         max_length=255,
         choices=THREAT_LEVELS,
@@ -38,18 +54,11 @@ class Food(models.Model):
     )
     user_group = models.ForeignKey(UserGroup, on_delete=models.CASCADE)
 
+    def __str__(self) -> str:
+        return self.title
     class Meta:
         db_table = 'food'
 
-
-class Allergen(models.Model):
-    title = models.CharField(max_length=255)
-    description = models.TextField()
-    major_allergen = models.BooleanField(default=False)
-    user_group = models.ForeignKey(UserGroup, on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = 'allergen'
 
 
 
