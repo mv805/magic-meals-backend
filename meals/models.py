@@ -37,22 +37,25 @@ class Food(models.Model):
     MAJOR_THREAT = 'Major'
     CAUTION_ONLY = 'Caution'
     NOT_ASSESSED = 'NA'
+    NO_KNOWN_THREAT = 'None'
 
     THREAT_LEVELS = [
         (MAJOR_THREAT, 'Major Threat'),
-        (CAUTION_ONLY, 'Caution only'),
+        (CAUTION_ONLY, 'Caution Only'),
         (NOT_ASSESSED, 'Not Assesed'),
+        (NO_KNOWN_THREAT, 'No Known Threat'),
     ]
 
     title = models.CharField(max_length=255)
     description = models.TextField()
-    allergens = models.ManyToManyField(Allergen)
+    allergens = models.ManyToManyField(Allergen, null=True, blank=True)
     threat_level = models.CharField(
         max_length=255,
         choices=THREAT_LEVELS,
         default=NOT_ASSESSED,
     )
     user_group = models.ForeignKey(UserGroup, on_delete=models.CASCADE)
+    ordering = ['title']
 
     def __str__(self) -> str:
         return self.title
