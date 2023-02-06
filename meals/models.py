@@ -48,7 +48,7 @@ class Food(models.Model):
 
     title = models.CharField(max_length=255)
     description = models.TextField()
-    allergens = models.ManyToManyField(Allergen, null=True, blank=True)
+    allergens = models.ManyToManyField(Allergen, blank=True)
     threat_level = models.CharField(
         max_length=255,
         choices=THREAT_LEVELS,

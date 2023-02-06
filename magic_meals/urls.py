@@ -20,5 +20,5 @@ admin.site.site_header = "Magic Meals Admin"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('foo/', include('meals.urls')),
+    path('magic-meals/', include('meals.urls')),
 ]
