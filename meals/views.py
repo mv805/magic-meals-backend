@@ -26,8 +26,14 @@ def all_users_list(request):
     return Response(serializer.data)
 
 
-@api_view()
+@api_view(['GET', 'POST'])
 def user_detail(request, id):
-    user = get_object_or_404(User, pk=id)
-    serializer = UserSerializer(user)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        user = get_object_or_404(User, pk=id)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = UserSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response('saved user')
